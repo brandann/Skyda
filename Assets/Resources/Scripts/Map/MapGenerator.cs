@@ -15,13 +15,13 @@ public class MapGenerator{
 	}
 	
 	public char[,] getMap(){
-		makeGrass();
-		makePonds();
-		makeSand();
-		makeTrees();
-		makeBuildings();
-		makeCity();
-		saveMap();
+		makeGrass(); Debug.Log ("makeGrass");
+		makePonds();Debug.Log ("makePonds");
+		makeSand();Debug.Log ("makeSand");
+		makeTrees(); Debug.Log ("makeTrees");
+		makeBuildings(); Debug.Log ("makeBuildings");
+		makeCity(); Debug.Log ("makeCity");
+		saveMap(); Debug.Log ("saveMap");
 		return map;
 	}
 	
@@ -124,7 +124,7 @@ public class MapGenerator{
 	}
 	
 	private void saveMap(){
-		using (System.IO.StreamWriter file = new System.IO.StreamWriter(@".\pond.txt"))
+		using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"./pond.txt"))
 		{
 			for(int i = map.GetLength(0) - 1; i >= 0; i--){
 				for(int j = 0; j < map.GetLength(1); j++){ //for(int j = map.GetLength(1) - 1; j >= 0; j--){

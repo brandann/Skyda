@@ -67,21 +67,26 @@ public class PondGenerator{
 			count++;
 		}
 		
-		int u = Random.Range(0,4);
+		int min = 0;
+		int max = 5;
 		
+		int u = Random.Range(min, max);
 		switch(u){
-		case(0):
-			BuildPond(x,y+1);
-			break;
-		case(1):
-			BuildPond(x+1,y);
-			break;
-		case(2):
-			BuildPond(x,y-1);
-			break;
-		case(3):
-			BuildPond(x-1,y);
-			break;
+			case(0):
+				BuildPond(x,y+1);
+				break;
+			case(1):
+				BuildPond(x+1,y);
+				break;
+			case(2):
+				BuildPond(x,y-1);
+				break;
+			case(3):
+				BuildPond(x-1,y);
+				break;
+			case(4):
+				BuildPond(x+1,y);
+				break;
 		}
 	}
 }

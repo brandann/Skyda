@@ -1,5 +1,7 @@
 using UnityEngine;
 using System.Collections;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.IO;
 
 public class MapManager : MonoBehaviour {
 	
@@ -27,6 +29,7 @@ public class MapManager : MonoBehaviour {
 		
 		generateMap();
 		
+		
 		MoveMap((map.GetLength(0)/17)/2,(map.GetLength(1)/10)/2);
 	}
 	
@@ -38,6 +41,14 @@ public class MapManager : MonoBehaviour {
 	public void generateMap(){
 		MapGenerator m = new MapGenerator();
 		map = m.getMap();	
+		//print(map);
+		BinaryFormatter bf = new BinaryFormatter();
+		MemoryStream ms = new MemoryStream();
+		byte[] Array;
+		bf.Serialize(ms, map);
+		Array = ms.ToArray();
+		print ("Length: " + Array.Length);
+		
 	}
 	
 	public void MoveMap(int dx, int dy){
