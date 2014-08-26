@@ -16,8 +16,6 @@ public class MapManager : MonoBehaviour {
 	private GameObject sandObject;
 	private GameObject treeObject;
 	
-	private Tokens tok = new Tokens();
-	
 	// Use this for initialization
 	void Start () {
 		waterObject = Resources.Load("Prefabs/watertile") as GameObject;
@@ -46,8 +44,6 @@ public class MapManager : MonoBehaviour {
 		ypos += dy * (SCREEN_HEIGHT-1);
 		xpos += dx * (SCREEN_WIDTH-1);
 		
-		print ("loc: " + xpos + ", " + ypos);
-		
 		foreach ( GameObject obj in mapobjects){
 			Destroy(obj.gameObject);
 		}
@@ -56,7 +52,7 @@ public class MapManager : MonoBehaviour {
 	}
 	
 	private void LoadMapScreen(int x, int y){
-		Tokens t = new Tokens();
+		//Tokens t = new Tokens();
 		for(int i = 0; i < SCREEN_WIDTH; i++){
 			for(int j = 0; j < SCREEN_HEIGHT; j++){
 				char tile = map[xpos+i,ypos+j];

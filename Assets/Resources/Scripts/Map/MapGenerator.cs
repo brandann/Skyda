@@ -119,8 +119,8 @@ public class MapGenerator{
 	}
 	
 	private void makeCity(){
-		CityGenerator c = new CityGenerator();
-		char[,] city = c.getCity(150,150);
+		//CityGenerator c = new CityGenerator();
+		//char[,] city = c.getCity(150,150);
 	}
 	
 	private void saveMap(){

@@ -18,8 +18,6 @@ public class CameraBoundry : MonoBehaviour {
 	}
 	
 	void OnTriggerEnter(Collider other){
-		print ("Collide");
-		//if (tag != other.gameObject.tag && other.gameObject.tag.Contains ("Unit")) {
 		string othertag = other.gameObject.tag;
 		if(othertag == "hero"){
 			if(this.gameObject.tag == "up"){

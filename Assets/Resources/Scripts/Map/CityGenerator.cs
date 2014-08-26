@@ -70,7 +70,7 @@ public class CityGenerator{
 	
 	private char[,] buildHouse(char[,] map, int x, int y, int w, int h){
 		Tokens token = new Tokens();
-		char[,] house = new char[w,h];
+		//char[,] house = new char[w,h];
 		
 		/*
 		//make house
