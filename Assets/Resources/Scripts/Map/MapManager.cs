@@ -7,12 +7,18 @@ public class MapManager : MonoBehaviour {
 	
 	private char[,] map;
 	ArrayList mapobjects;
+	ArrayList desobjects;
+	
 	private int xpos = 0;
 	private int ypos = 0;
+	
+	private const int XDIR = 0;
+	private const int YDIR = 1;
 	
 	private int SCREEN_HEIGHT = 10;
 	private int SCREEN_WIDTH = 17;
 	
+	private Camera cam;
 	private GameObject waterObject;
 	private GameObject grassObject;
 	private GameObject sandObject;
@@ -20,17 +26,28 @@ public class MapManager : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
+		cam = GameObject.Find("Main Camera").GetComponent<Camera>();
+		
+		if (cam != null){
+			float camHeight = cam.camera.orthographicSize;
+			float asp = cam.camera.aspect;
+			
+			SCREEN_HEIGHT = (int) ((camHeight * 2) + .5f);
+			SCREEN_WIDTH = (int) ((SCREEN_HEIGHT * asp) + .5f);
+			SCREEN_HEIGHT++;
+			SCREEN_WIDTH++;
+		}
+		
 		waterObject = Resources.Load("Prefabs/watertile") as GameObject;
 		grassObject = Resources.Load("Prefabs/grasstile") as GameObject;
 		sandObject = Resources.Load("Prefabs/sandtile") as GameObject;
 		treeObject = Resources.Load("Prefabs/treetile") as GameObject;
 		
 		mapobjects = new ArrayList();
-		
+		desobjects = new ArrayList();
 		generateMap();
 		
-		
-		MoveMap((map.GetLength(0)/17)/2,(map.GetLength(1)/10)/2);
+		MoveMap((map.GetLength(XDIR)/SCREEN_WIDTH)/2,(map.GetLength(YDIR)/SCREEN_HEIGHT)/2);
 	}
 	
 	// Update is called once per frame
@@ -41,23 +58,25 @@ public class MapManager : MonoBehaviour {
 	public void generateMap(){
 		MapGenerator m = new MapGenerator();
 		map = m.getMap();	
-		//print(map);
-		BinaryFormatter bf = new BinaryFormatter();
-		MemoryStream ms = new MemoryStream();
-		byte[] Array;
-		bf.Serialize(ms, map);
-		Array = ms.ToArray();
-		print ("Length: " + Array.Length);
-		
 	}
+	
+	private void destroytiles(ArrayList a){
+		foreach ( GameObject obj in a){
+			Destroy(obj.gameObject);
+		}
+	}
+	
 	
 	public void MoveMap(int dx, int dy){
 		ypos += dy * (SCREEN_HEIGHT-1);
 		xpos += dx * (SCREEN_WIDTH-1);
 		
 		foreach ( GameObject obj in mapobjects){
-			Destroy(obj.gameObject);
+			desobjects.Add(obj);
 		}
+		
+		// remove this later
+		destroytiles(desobjects);
 		
 		LoadMapScreen(xpos, ypos);
 	}
