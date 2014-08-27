@@ -12,6 +12,8 @@ public class MapManager : MonoBehaviour {
 	private int xpos = 0;
 	private int ypos = 0;
 	
+	float slide = 0;
+	
 	private const int XDIR = 0;
 	private const int YDIR = 1;
 	
@@ -71,17 +73,29 @@ public class MapManager : MonoBehaviour {
 		ypos += dy * (SCREEN_HEIGHT-1);
 		xpos += dx * (SCREEN_WIDTH-1);
 		
+		Vector3 dir = new Vector3(dx,dy,0);
+		//Vector3 dir = new Vector3(Mathf.Sign(dx),Mathf.Sign(dy),0);
+//		char dir = 'a';
+//		if(dx<0) dir = 'l';
+//		else if(dx>0) dir = 'r';
+//		else if(dy<0) dir = 'd';
+//		else if(dy>0) dir = 'u';
 		foreach ( GameObject obj in mapobjects){
 			desobjects.Add(obj);
 		}
 		
+		if(dx != 0) slide = SCREEN_WIDTH;
+		else if (dy != 0) slide = SCREEN_HEIGHT;
+		
+		mapobjects.Clear();
+		
 		// remove this later
 		destroytiles(desobjects);
 		
-		LoadMapScreen(xpos, ypos);
+		LoadMapScreen(xpos, ypos, dir);
 	}
 	
-	private void LoadMapScreen(int x, int y){
+	private void LoadMapScreen(int x, int y, Vector3 dir){
 		//Tokens t = new Tokens();
 		for(int i = 0; i < SCREEN_WIDTH; i++){
 			for(int j = 0; j < SCREEN_HEIGHT; j++){
@@ -90,6 +104,15 @@ public class MapManager : MonoBehaviour {
 				//print ("Map: " + xpos+i + ", " + ypos+j);
 				int lx = i+1;
 				int ly = j+1;
+				
+				lx += (int) (dir.x * SCREEN_WIDTH);
+				ly += (int) (dir.y * SCREEN_HEIGHT);
+				
+//				if(dir == 'l') lx -= SCREEN_WIDTH;
+//				else if(dir == 'r') lx += SCREEN_WIDTH;
+//				else if(dir == 'd') ly -= SCREEN_HEIGHT;
+//				else if(dir == 'u') ly += SCREEN_HEIGHT;
+				
 				switch(tile){
 				case('X'):
 					loadWATER(lx,ly);
