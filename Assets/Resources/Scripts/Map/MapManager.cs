@@ -13,6 +13,8 @@ public class MapManager : MonoBehaviour {
 	private int ypos = 0;
 	
 	float slide = 0;
+	Vector3 slidedir = Vector3.zero;
+	float slideFrameRate = 60;
 	
 	private const int XDIR = 0;
 	private const int YDIR = 1;
@@ -21,6 +23,7 @@ public class MapManager : MonoBehaviour {
 	private int SCREEN_WIDTH = 17;
 	
 	private Camera cam;
+	private HeroBehavior hero;
 	private GameObject waterObject;
 	private GameObject grassObject;
 	private GameObject sandObject;
@@ -40,6 +43,7 @@ public class MapManager : MonoBehaviour {
 			SCREEN_WIDTH++;
 		}
 		
+		hero = GameObject.Find("triangle").GetComponent<HeroBehavior>();
 		waterObject = Resources.Load("Prefabs/watertile") as GameObject;
 		grassObject = Resources.Load("Prefabs/grasstile") as GameObject;
 		sandObject = Resources.Load("Prefabs/sandtile") as GameObject;
@@ -49,12 +53,32 @@ public class MapManager : MonoBehaviour {
 		desobjects = new ArrayList();
 		generateMap();
 		
-		MoveMap((map.GetLength(XDIR)/SCREEN_WIDTH)/2,(map.GetLength(YDIR)/SCREEN_HEIGHT)/2);
+		//MoveMap((map.GetLength(XDIR)/SCREEN_WIDTH)/2,(map.GetLength(YDIR)/SCREEN_HEIGHT)/2);
+		LoadMapScreen(map.GetLength(XDIR)/2 , map.GetLength(YDIR)/2 , Vector3.zero);
 	}
-	
+	float slidespeed = 0;
 	// Update is called once per frame
 	void Update () {
-		
+		/*
+		if(slide > 0){
+			hero.transform.position += new Vector3(-1,0,0);
+			slide--;
+		}
+		*/
+		/*
+		if(slide >= 0){
+			Vector3 s = new Vector3(slidedir.x*-.1f, slidedir.y*-.1f,0);
+			
+			foreach ( GameObject obj in mapobjects){
+				obj.transform.Translate(s);
+			}
+			foreach ( GameObject obj in desobjects){
+				obj.transform.Translate(s);
+			}
+			hero.transform.Translate((s));
+			slide -= .1f;
+		}
+		*/
 	}
 	
 	public void generateMap(){
@@ -74,6 +98,7 @@ public class MapManager : MonoBehaviour {
 		xpos += dx * (SCREEN_WIDTH-1);
 		
 		Vector3 dir = new Vector3(dx,dy,0);
+		slidedir = dir;
 		//Vector3 dir = new Vector3(Mathf.Sign(dx),Mathf.Sign(dy),0);
 //		char dir = 'a';
 //		if(dx<0) dir = 'l';
@@ -84,13 +109,17 @@ public class MapManager : MonoBehaviour {
 			desobjects.Add(obj);
 		}
 		
-		if(dx != 0) slide = SCREEN_WIDTH;
-		else if (dy != 0) slide = SCREEN_HEIGHT;
+		if(dx != 0) {
+			slide = SCREEN_WIDTH - 2;
+		}
+		else if (dy != 0) {
+			slide = SCREEN_HEIGHT - 2;
+		}
 		
 		mapobjects.Clear();
 		
 		// remove this later
-		destroytiles(desobjects);
+		// destroytiles(desobjects);
 		
 		LoadMapScreen(xpos, ypos, dir);
 	}
@@ -105,8 +134,8 @@ public class MapManager : MonoBehaviour {
 				int lx = i+1;
 				int ly = j+1;
 				
-				lx += (int) (dir.x * SCREEN_WIDTH);
-				ly += (int) (dir.y * SCREEN_HEIGHT);
+				//lx += (int) (dir.x * SCREEN_WIDTH);
+				//ly += (int) (dir.y * SCREEN_HEIGHT);
 				
 //				if(dir == 'l') lx -= SCREEN_WIDTH;
 //				else if(dir == 'r') lx += SCREEN_WIDTH;
