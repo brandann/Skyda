@@ -14,6 +14,8 @@ namespace Skyda{
 		private int ypos = 0;
 		
 		Vector3 slidedir = Vector3.zero;
+		bool slide = false;
+		int slidecount = 0;
 		
 		private const int XDIR = 0;
 		private const int YDIR = 1;
@@ -57,10 +59,25 @@ namespace Skyda{
 			ypos = map.GetLength(YDIR) / 2;
 			LoadMapScreen((map.GetLength(XDIR) * SCREEN_WIDTH)/2 , (map.GetLength(YDIR) * SCREEN_HEIGHT)/2 , Vector3.zero);
 		}
-		float slidespeed = 0;
+		
 		// Update is called once per frame
 		void Update () {
-
+			if(slide){
+				
+			}
+			
+			if(slidecount > 0){
+				foreach ( GameObject obj in mapobjects){
+					obj.transform.position -= slidedir;
+				}
+				foreach ( GameObject obj in desobjects){
+					obj.transform.position -= slidedir;
+				}
+				slidecount--;
+			}
+			else {
+				destroytiles(desobjects);
+			}
 		}
 		
 		public void generateMap(){
@@ -72,12 +89,17 @@ namespace Skyda{
 			foreach ( GameObject obj in a){
 				Destroy(obj.gameObject);
 			}
+			a.Clear();
 		}
 		
 		
 		public void MoveMap(int dx, int dy){
 			ypos += dy * (SCREEN_HEIGHT-1);
 			xpos += dx * (SCREEN_WIDTH-1);
+			
+			foreach ( GameObject obj in mapobjects){
+				desobjects.Add(obj.gameObject);
+			}			
 			
 			slidedir = new Vector3(dx,dy,0);
 			
@@ -91,11 +113,24 @@ namespace Skyda{
 			//	desobjects.Add(obj);
 			//}
 			
-			destroytiles(mapobjects);
+			//destroytiles(desobjects);
 			
 			mapobjects.Clear();
-			
+			if(dx != 0) slidecount = SCREEN_WIDTH;
+			else if (dy != 0) slidecount = SCREEN_HEIGHT;
 			LoadMapScreen(xpos, ypos, slidedir);
+			
+			Vector3 dir = new Vector3(SCREEN_WIDTH, SCREEN_HEIGHT, 0);
+			dir.x *= slidedir.x;
+			dir.y *= slidedir.y;
+			
+			foreach ( GameObject obj in mapobjects){
+				obj.transform.position += dir;
+			}
+			
+			slide = true;
+			
+			
 		}
 		
 		private void LoadMapScreen(int x, int y, Vector3 dir){
