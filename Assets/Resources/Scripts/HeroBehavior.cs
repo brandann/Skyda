@@ -5,6 +5,7 @@ namespace Skyda{
 	public class HeroBehavior : MonoBehaviour {
 	
 		private float Speed = .05f;
+		Vector3 dir = Vector3.zero;
 		
 		// Use this for initialization
 		void Start () {
@@ -22,7 +23,9 @@ namespace Skyda{
 		
 		// hero collider
 		void OnTriggerEnter2D(Collider2D other){
-			
+//			if(other.gameObject.tag == "water"){
+//				this.transform.Translate(new Vector3(-dir.x * Speed, -dir.y * Speed, 0));
+//			}
 		}
 	}
 }

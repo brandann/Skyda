@@ -73,7 +73,15 @@ namespace Skyda{
 			// load first map screen
 			xpos = map.GetLength(XDIR) / 2;
 			ypos = map.GetLength(YDIR) / 2;
-			LoadMapScreen((map.GetLength(XDIR) * SCREEN_WIDTH)/2 , (map.GetLength(YDIR) * SCREEN_HEIGHT)/2 , Vector3.zero);
+			
+			// testing
+//			xpos = 0; // start at right side
+//			ypos = 0; // start at bottom
+//			xpos = map.GetLength(XDIR) - SCREEN_WIDTH; // start at left side
+//			ypos = map.GetLength(YDIR) - SCREEN_HEIGHT; // start at top side
+			
+			LoadMapScreen(xpos * SCREEN_WIDTH, ypos * SCREEN_HEIGHT, Vector3.zero);
+			print ("Starting Location: (" + xpos + ", " + ypos + ", 0)");
 		}
 		
 		// Update is called once per frame
@@ -121,6 +129,20 @@ namespace Skyda{
 		*/
 		public void MoveMap(int dx, int dy){
 			
+			int txpos = xpos + dx * (SCREEN_WIDTH-1);
+			int typos = ypos + dy * (SCREEN_HEIGHT-1);
+			
+			// check bounds before doing anything!
+			bool outofbounds = false;
+			if(txpos < 0) outofbounds = true;
+			else if(txpos >= map.GetLength(XDIR) - SCREEN_WIDTH) outofbounds = true;
+			else if(typos < 0) outofbounds = true;
+			else if(typos >= map.GetLength(YDIR) - SCREEN_HEIGHT) outofbounds = true;
+			
+			if(outofbounds){
+				return;
+			}
+			
 			// set new current location
 			ypos += dy * (SCREEN_HEIGHT-1);
 			xpos += dx * (SCREEN_WIDTH-1);
@@ -152,6 +174,14 @@ namespace Skyda{
 			foreach ( GameObject obj in mapobjects){
 				obj.transform.position += dir;
 			}
+			
+			// move hero
+			hero.transform.position += new Vector3(
+				(SCREEN_WIDTH - 1.5f) * -slidedir.x , //x direction
+				(SCREEN_HEIGHT - 1.5f) * -slidedir.y, //y direction
+				0);									  //z direction
+				
+			print ("Current Location: (" + xpos + ", " + ypos + ", 0)");
 		}
 		
 		/**
