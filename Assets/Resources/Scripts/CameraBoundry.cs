@@ -9,6 +9,8 @@ namespace Skyda{
 		
 		// Use this for initialization
 		void Start () {
+		
+			// Find Game Objects
 			map = GameObject.Find ("MapManager").GetComponent<MapManager>();
 			hero = GameObject.Find("triangle").GetComponent<HeroBehavior>();
 		}
@@ -19,7 +21,11 @@ namespace Skyda{
 		}
 		
 		void OnTriggerEnter(Collider other){
+		
+			// get other tag
 			string othertag = other.gameObject.tag;
+			
+			// determine direction to move
 			if(othertag == "hero"){
 				if(this.gameObject.tag == "up"){
 					map.MoveMap(0,1);

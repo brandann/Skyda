@@ -6,55 +6,71 @@ using System.IO;
 namespace Skyda{
 	public class MapManager : MonoBehaviour {
 		
+		#region MapMembers
 		private char[,] map;
 		ArrayList mapobjects;
 		ArrayList desobjects;
-		
-		private int xpos = 0;
-		private int ypos = 0;
-		
-		Vector3 slidedir = Vector3.zero;
-		bool slide = false;
-		int slidecount = 0;
-		
 		private const int XDIR = 0;
 		private const int YDIR = 1;
+		#endregion
 		
+		#region PositionMemebers
+		private int xpos = 0;
+		private int ypos = 0;
+		#endregion
+		
+		#region SlideMembers
+		Vector3 slidedir = Vector3.zero;
+		int slidecount = 0;
+		float slidespeed = 1f;
+		#endregion
+		
+		#region ScreenSizeMemebers
 		private int SCREEN_HEIGHT = 10;
 		private int SCREEN_WIDTH = 17;
+		#endregion
 		
+		#region GameObjects
 		private CameraBehavior cam;
 		private HeroBehavior hero;
 		private GameObject waterObject;
 		private GameObject grassObject;
 		private GameObject sandObject;
 		private GameObject treeObject;
+		#endregion
+		
+		#region GameMethods
 		
 		// Use this for initialization
 		void Start () {
+		
+			// find and load objects
 			cam = GameObject.Find("Main Camera").GetComponent<CameraBehavior>();
-			
-			if (cam != null){
-				float camHeight = cam.camera.orthographicSize;
-				float asp = cam.camera.aspect;
-				
-				SCREEN_HEIGHT = (int) ((camHeight * 2) + .5f);
-				SCREEN_WIDTH = (int) ((SCREEN_HEIGHT * asp) + .5f);
-				SCREEN_HEIGHT++;
-				SCREEN_WIDTH++;
-			}
-			
 			hero = GameObject.Find("triangle").GetComponent<HeroBehavior>();
 			waterObject = Resources.Load("Prefabs/watertile") as GameObject;
 			grassObject = Resources.Load("Prefabs/grasstile") as GameObject;
 			sandObject = Resources.Load("Prefabs/sandtile") as GameObject;
 			treeObject = Resources.Load("Prefabs/treetile") as GameObject;
 			
+			// compute camera aspect ratio and size
+			if (cam != null){
+				float camHeight = cam.camera.orthographicSize;
+				float asp = cam.camera.aspect;
+				SCREEN_HEIGHT = (int) ((camHeight * 2) + .5f);
+				SCREEN_WIDTH = (int) ((SCREEN_HEIGHT * asp) + .5f);
+				SCREEN_HEIGHT++;
+				SCREEN_WIDTH++;
+			}
+			
+			// initilize Arraylists
 			mapobjects = new ArrayList();
 			desobjects = new ArrayList();
+			
+			// generate Map
 			generateMap();
 			
-			//MoveMap((map.GetLength(XDIR)/SCREEN_WIDTH)/2,(map.GetLength(YDIR)/SCREEN_HEIGHT)/2);
+			// set current x and y positions
+			// load first map screen
 			xpos = map.GetLength(XDIR) / 2;
 			ypos = map.GetLength(YDIR) / 2;
 			LoadMapScreen((map.GetLength(XDIR) * SCREEN_WIDTH)/2 , (map.GetLength(YDIR) * SCREEN_HEIGHT)/2 , Vector3.zero);
@@ -62,29 +78,36 @@ namespace Skyda{
 		
 		// Update is called once per frame
 		void Update () {
-			if(slide){
-				
-			}
 			
+			// create a sliding animation for tiles
 			if(slidecount > 0){
+				// move new tiles
 				foreach ( GameObject obj in mapobjects){
-					obj.transform.position -= slidedir;
+					obj.transform.position -= (slidedir * (float)((1/slidespeed)));
 				}
+				// move old tiles
 				foreach ( GameObject obj in desobjects){
-					obj.transform.position -= slidedir;
+					obj.transform.position -= (slidedir * (float)((1/slidespeed)));
 				}
+				// decrement counter
 				slidecount--;
 			}
 			else {
+				// destroy the old tiles when finished sliding
 				destroytiles(desobjects);
 			}
 		}
 		
+		#endregion
+		
+		// instantiate MapGenerator and create new map
 		public void generateMap(){
 			MapGenerator m = new MapGenerator();
 			map = m.getMap();	
 		}
 		
+		#region MapTraversal
+		// destroy all tiles in a list
 		private void destroytiles(ArrayList a){
 			foreach ( GameObject obj in a){
 				Destroy(obj.gameObject);
@@ -92,128 +115,110 @@ namespace Skyda{
 			a.Clear();
 		}
 		
-		
+		/**
+			move the screen tiles by a dx,dy direction
+			does not account for map bounds right now!
+		*/
 		public void MoveMap(int dx, int dy){
+			
+			// set new current location
 			ypos += dy * (SCREEN_HEIGHT-1);
 			xpos += dx * (SCREEN_WIDTH-1);
 			
+			// move current game tiles to the temperaty list
 			foreach ( GameObject obj in mapobjects){
 				desobjects.Add(obj.gameObject);
 			}			
 			
+			// clear current tile list to populate new tiles
+			mapobjects.Clear();
+			
+			// create direction vector for slideing the map
 			slidedir = new Vector3(dx,dy,0);
 			
-			//Vector3 dir = new Vector3(Mathf.Sign(dx),Mathf.Sign(dy),0);
-	//		char dir = 'a';
-	//		if(dx<0) dir = 'l';
-	//		else if(dx>0) dir = 'r';
-	//		else if(dy<0) dir = 'd';
-	//		else if(dy>0) dir = 'u';
-			//foreach ( GameObject obj in mapobjects){
-			//	desobjects.Add(obj);
-			//}
+			// determine the distance tiles must move, dependent on direction
+			if(dx != 0) slidecount = (int) (SCREEN_WIDTH * slidespeed);
+			else if (dy != 0) slidecount = (int) (SCREEN_HEIGHT * slidespeed);
 			
-			//destroytiles(desobjects);
-			
-			mapobjects.Clear();
-			if(dx != 0) slidecount = SCREEN_WIDTH;
-			else if (dy != 0) slidecount = SCREEN_HEIGHT;
+			// load the new map tiles into mapobjects
 			LoadMapScreen(xpos, ypos, slidedir);
 			
+			// make a temperary vector to move the current tiles into their initial sliding location
 			Vector3 dir = new Vector3(SCREEN_WIDTH, SCREEN_HEIGHT, 0);
 			dir.x *= slidedir.x;
 			dir.y *= slidedir.y;
 			
+			// move the new tiles to their initial sliding location
 			foreach ( GameObject obj in mapobjects){
 				obj.transform.position += dir;
 			}
-			
-			slide = true;
-			
-			
 		}
 		
+		/**
+			loads the map tiles based on the map encoding
+		*/
 		private void LoadMapScreen(int x, int y, Vector3 dir){
-			//Tokens t = new Tokens();
+			
+			// loop through the area of the map to be loaded
+			// x direction
 			for(int i = 0; i < SCREEN_WIDTH; i++){
+			
+				// y direction
 				for(int j = 0; j < SCREEN_HEIGHT; j++){
+				
+					// get char code for map tile
 					char tile = map[xpos+i,ypos+j];
-					//print ("Tile: " + i + ", " + j);
-					//print ("Map: " + xpos+i + ", " + ypos+j);
+					
+					// put tile at (i,j) + (1,1)
 					int lx = i+1;
 					int ly = j+1;
 					
+					// load tiles
 					switch(tile){
-					case('X'):
-						loadWATER(lx,ly);
-						break;
-					case('_'):
-						loadGRASS(lx,ly);
-						break;
-					case('0'):
-						loadTREE(lx,ly);
-						break;
-					case('*'):
-						loadSAND(lx,ly);
-						break;
-					/*case('='):
-						loadHOUSE(lx,ly);
-						break;
-					case('+'):
-						loadDOOR(lx,ly);
-						break;
-					case('g'):
-						loadPAVER(lx,ly);
-						break;
-					case('h'):
-						loadHOUSEWALL(lx,ly);
-						break;*/
-					default:
-						loadGRASS(lx,ly);
-						break;
+						case('X'):
+							loadWATER(lx,ly);
+							break;
+						case('_'):
+							loadGRASS(lx,ly);
+							break;
+						case('0'):
+							loadTREE(lx,ly);
+							break;
+						case('*'):
+							loadSAND(lx,ly);
+							break;
+						/*case('='):
+							loadHOUSE(lx,ly);
+							break;
+						case('+'):
+							loadDOOR(lx,ly);
+							break;
+						case('g'):
+							loadPAVER(lx,ly);
+							break;
+						case('h'):
+							loadHOUSEWALL(lx,ly);
+							break;*/
+						default:
+							loadGRASS(lx,ly);
+							break;
 					}
 				}
 			}
 		}
+		#endregion
 	
-	#region TileObjects
-	/*
-		public const char WATER = 'X';	
-		public const char GRASS= '_';	
-		public const char TREE= '0';	
-		public const char SAND= '*';	
-		public const char HOUSE = '=';	
-		public const char DOOR = '+';	
-		public const char PAVER = 'g';	
-		public const char HOUSEWALL = 'h';	
-		
-		case(t.getWATER()):
-			loadWATER(i,j);
-			break;
-		case(t.getGRASS()):
-			loadGRASS(i,j);
-			break;
-		case(t.getTREE()):
-			loadTREE(i,j);
-			break;
-		case(t.getSAND()):
-			loadSAND(i,j);
-			break;
-		case(t.getHOUSE()):
-			loadHOUSE(i,j);
-			break;
-		case(t.getDOOR()):
-			loadDOOR(i,j);
-			break;
-		case(t.getPAVER()):
-			loadPAVER(i,j);
-			break;
-		case(t.getHOUSEWALL()):
-			loadHOUSEWALL(i,j);
-			break;
-			
-	*/
-		
+		#region TileObjects
+		/*
+			public const char WATER = 'X';	
+			public const char GRASS= '_';	
+			public const char TREE= '0';	
+			public const char SAND= '*';	
+			public const char HOUSE = '=';	
+			public const char DOOR = '+';	
+			public const char PAVER = 'g';	
+			public const char HOUSEWALL = 'h';	
+		*/
 		
 		// instantiate grass object
 		void loadGRASS(int x, int y){
@@ -267,23 +272,25 @@ namespace Skyda{
 			}
 		}
 		
+		// instantiate house object
 		void loadHOUSE(int x, int y){
 		
 		}
 		
+		// instantiate door object
 		void loadDOOR(int x, int y){
 		
 		}
 		
+		// instantiate paver object
 		void loadPAVER(int x, int y){
 		
 		}
 		
+		// instantiate housewall object
 		void loadHOUSEWALL(int x, int y){
 		
 		}
-		
-	
-	#endregion
+		#endregion
 	}
 }

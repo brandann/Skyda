@@ -9,23 +9,31 @@ namespace Skyda{
 		private char[,] map;
 		private Tokens token;
 		
-		
+		/**
+			default constructor
+		*/
 		public MapGenerator(){
 			token = new Tokens();
 			map = new char[WIDTH,HEIGHT];
 		}
 		
+		/**
+			public map generator function
+		*/
 		public char[,] getMap(){
-			makeGrass(); Debug.Log ("makeGrass");
-			makePonds();Debug.Log ("makePonds");
-			makeSand();Debug.Log ("makeSand");
-			makeTrees(); Debug.Log ("makeTrees");
-			makeBuildings(); Debug.Log ("makeBuildings");
-			makeCity(); Debug.Log ("makeCity");
-			saveMap(); Debug.Log ("saveMap");
+			makeGrass();	// Debug.Log ("makeGrass");
+			makePonds();	// Debug.Log ("makePonds");
+			makeSand();		// Debug.Log ("makeSand");
+			makeTrees(); 	// Debug.Log ("makeTrees");
+			makeBuildings();// Debug.Log ("makeBuildings");
+			makeCity(); 	// Debug.Log ("makeCity");
+			saveMap(); 		// Debug.Log ("saveMap");
 			return map;
 		}
 		
+		/**
+			load grass tiles into every position
+		*/
 		private void makeGrass(){
 			for(int i = 0; i < WIDTH; i++){
 				for(int j = 0; j < WIDTH; j++){
@@ -34,10 +42,20 @@ namespace Skyda{
 			}
 		}
 		
+		/**
+			place ponds on map
+		*/
 		private void makePonds(){
+		
+			// randomly choose number of ponds for map to have
 			int numberOfPonds = (int) Random.Range(Mathf.Sqrt(WIDTH),WIDTH);
+			
+			// initilize pond generator
 			PondGenerator pond = new PondGenerator();
+			
+			// make and place ponds
 			for(int i = 0; i < numberOfPonds; i++){
+				
 				// make pond
 				char[,] temp = pond.getPond((int) Random.Range(5,WIDTH*.1f),(int) Random.Range(5,WIDTH*.1f));
 				
@@ -71,6 +89,9 @@ namespace Skyda{
 			}
 		}
 		
+		/**
+			place sand on map where water meets grass
+		*/
 		private void makeSand(){
 			for(int i = 0; i < WIDTH; i++){
 				for(int j = 0; j < HEIGHT; j++){
@@ -91,11 +112,22 @@ namespace Skyda{
 			}
 		}
 		
+		/**
+			randomly place trees on grass
+		*/
 		private void makeTrees(){
+		
+			// randomly choose qty of trees
 			int numoftrees = (int) Random.Range(WIDTH, (int) ((WIDTH * HEIGHT)*.1f) );
+			
+			// place trees
 			for(int i = 0; i < numoftrees; i++){
+			
+				// randomly pick location
 				int locX = Random.Range(0,WIDTH-1);
 				int locY = Random.Range(0,HEIGHT-1);
+				
+				// try to place tree
 				if(map[locX,locY] == token.getGRASS()){
 					map[locX,locY] = token.getTREE();
 				}
@@ -104,6 +136,7 @@ namespace Skyda{
 				}
 			}
 		}
+		
 		
 		private void makeBuildings(){
 			int bwidth = 10;
