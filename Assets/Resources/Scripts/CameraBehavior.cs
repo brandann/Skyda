@@ -1,9 +1,9 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 namespace Skyda{
-	public class GameManager : MonoBehaviour {
-		
+	public class CameraBehavior : MonoBehaviour {
+	
 		// Use this for initialization
 		void Start () {
 			
@@ -13,6 +13,5 @@ namespace Skyda{
 		void Update () {
 			
 		}
-		
-}
+	}
 }
