@@ -13,9 +13,7 @@ namespace Skyda{
 		private int xpos = 0;
 		private int ypos = 0;
 		
-		float slide = 0;
 		Vector3 slidedir = Vector3.zero;
-		float slideFrameRate = 60;
 		
 		private const int XDIR = 0;
 		private const int YDIR = 1;
@@ -55,31 +53,14 @@ namespace Skyda{
 			generateMap();
 			
 			//MoveMap((map.GetLength(XDIR)/SCREEN_WIDTH)/2,(map.GetLength(YDIR)/SCREEN_HEIGHT)/2);
-			LoadMapScreen(map.GetLength(XDIR)/2 , map.GetLength(YDIR)/2 , Vector3.zero);
+			xpos = map.GetLength(XDIR) / 2;
+			ypos = map.GetLength(YDIR) / 2;
+			LoadMapScreen((map.GetLength(XDIR) * SCREEN_WIDTH)/2 , (map.GetLength(YDIR) * SCREEN_HEIGHT)/2 , Vector3.zero);
 		}
 		float slidespeed = 0;
 		// Update is called once per frame
 		void Update () {
-			/*
-			if(slide > 0){
-				hero.transform.position += new Vector3(-1,0,0);
-				slide--;
-			}
-			*/
-			/*
-			if(slide >= 0){
-				Vector3 s = new Vector3(slidedir.x*-.1f, slidedir.y*-.1f,0);
-				
-				foreach ( GameObject obj in mapobjects){
-					obj.transform.Translate(s);
-				}
-				foreach ( GameObject obj in desobjects){
-					obj.transform.Translate(s);
-				}
-				hero.transform.Translate((s));
-				slide -= .1f;
-			}
-			*/
+
 		}
 		
 		public void generateMap(){
@@ -98,31 +79,23 @@ namespace Skyda{
 			ypos += dy * (SCREEN_HEIGHT-1);
 			xpos += dx * (SCREEN_WIDTH-1);
 			
-			Vector3 dir = new Vector3(dx,dy,0);
-			slidedir = dir;
+			slidedir = new Vector3(dx,dy,0);
+			
 			//Vector3 dir = new Vector3(Mathf.Sign(dx),Mathf.Sign(dy),0);
 	//		char dir = 'a';
 	//		if(dx<0) dir = 'l';
 	//		else if(dx>0) dir = 'r';
 	//		else if(dy<0) dir = 'd';
 	//		else if(dy>0) dir = 'u';
-			foreach ( GameObject obj in mapobjects){
-				desobjects.Add(obj);
-			}
+			//foreach ( GameObject obj in mapobjects){
+			//	desobjects.Add(obj);
+			//}
 			
-			if(dx != 0) {
-				slide = SCREEN_WIDTH - 2;
-			}
-			else if (dy != 0) {
-				slide = SCREEN_HEIGHT - 2;
-			}
+			destroytiles(mapobjects);
 			
 			mapobjects.Clear();
 			
-			// remove this later
-			// destroytiles(desobjects);
-			
-			LoadMapScreen(xpos, ypos, dir);
+			LoadMapScreen(xpos, ypos, slidedir);
 		}
 		
 		private void LoadMapScreen(int x, int y, Vector3 dir){
@@ -134,14 +107,6 @@ namespace Skyda{
 					//print ("Map: " + xpos+i + ", " + ypos+j);
 					int lx = i+1;
 					int ly = j+1;
-					
-					//lx += (int) (dir.x * SCREEN_WIDTH);
-					//ly += (int) (dir.y * SCREEN_HEIGHT);
-					
-	//				if(dir == 'l') lx -= SCREEN_WIDTH;
-	//				else if(dir == 'r') lx += SCREEN_WIDTH;
-	//				else if(dir == 'd') ly -= SCREEN_HEIGHT;
-	//				else if(dir == 'u') ly += SCREEN_HEIGHT;
 					
 					switch(tile){
 					case('X'):
