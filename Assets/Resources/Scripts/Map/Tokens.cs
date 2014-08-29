@@ -8,8 +8,8 @@
 		public const char HOUSE = '=';	
 		public const char DOOR = '+';	
 		public const char PAVER = 'g';	
-		public const char HOUSEWALL = 'h';	
-	//	public const char = 'i';	
+		public const char HOUSEWALL = 'h';
+		public const char ROCK = 'i';	
 	//	public const char = 'j';	
 	//	public const char = 'k';	
 	//	public const char = 'l';	
@@ -38,7 +38,7 @@
 		public char getDOOR() {return DOOR;}
 		public char getPAVER() {return PAVER;}
 		public char getHOUSEWALL() {return HOUSEWALL;}
-	//	public char get() {return ;}
+		public char getROCK() {return ROCK;}
 	//	public char get() {return ;}
 	//	public char get() {return ;}
 	//	public char get() {return ;}

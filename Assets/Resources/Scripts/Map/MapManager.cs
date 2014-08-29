@@ -37,6 +37,7 @@ namespace Skyda{
 		private GameObject grassObject;
 		private GameObject sandObject;
 		private GameObject treeObject;
+		private GameObject rockObject;
 		#endregion
 		
 		#region GameMethods
@@ -51,6 +52,7 @@ namespace Skyda{
 			grassObject = Resources.Load("Prefabs/grasstile") as GameObject;
 			sandObject = Resources.Load("Prefabs/sandtile") as GameObject;
 			treeObject = Resources.Load("Prefabs/treetile") as GameObject;
+			rockObject = Resources.Load ("Prefabs/rocktile") as GameObject;
 			
 			// compute camera aspect ratio and size
 			if (cam != null){
@@ -229,6 +231,9 @@ namespace Skyda{
 						case('h'):
 							loadHOUSEWALL(lx,ly);
 							break;*/
+						case('i'):
+							loadROCK(lx,ly);
+							break;
 						default:
 							loadGRASS(lx,ly);
 							break;
@@ -320,6 +325,19 @@ namespace Skyda{
 		// instantiate housewall object
 		void loadHOUSEWALL(int x, int y){
 		
+		}
+		
+		// instantiate rock object
+		void loadROCK(int x, int y){
+			GameObject e = Instantiate(rockObject) as GameObject;
+			RockTile spawnedParticle = e.GetComponent<RockTile>();
+			if(spawnedParticle != null) {
+				e.transform.position = new Vector3(x,y,0);
+				mapobjects.Add(e);
+			}
+			else {
+				print ("error creating rock");
+			}
 		}
 		#endregion
 	}

@@ -27,6 +27,7 @@ namespace Skyda{
 			makeTrees(); 	// Debug.Log ("makeTrees");
 			makeBuildings();// Debug.Log ("makeBuildings");
 			makeCity(); 	// Debug.Log ("makeCity");
+			makeRocks();
 			saveMap(); 		// Debug.Log ("saveMap");
 			return map;
 		}
@@ -155,6 +156,19 @@ namespace Skyda{
 		private void makeCity(){
 			//CityGenerator c = new CityGenerator();
 			//char[,] city = c.getCity(150,150);
+		}
+		
+		private void makeRocks(){
+			for(int i = 0; i < WIDTH; i++){
+				for(int j = 0; j < WIDTH; j++){
+					if(map[i,j] == token.getTREE()){
+						int r = Random.Range(0,2);
+						if(r == 1){
+							map[i,j] = token.getROCK();
+						}
+					}
+				}
+			}
 		}
 		
 		private void saveMap(){
