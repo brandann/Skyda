@@ -35,6 +35,9 @@ namespace Skyda{
 		private HeroBehavior hero;
 		private GameObject waterObject;
 		private GameObject grassObject;
+		private GameObject grassObject2;
+		private GameObject grassObject3;
+		private GameObject grassObject4;
 		private GameObject sandObject;
 		private GameObject treeObject;
 		private GameObject rockObject;
@@ -50,6 +53,9 @@ namespace Skyda{
 			hero = GameObject.Find("triangle").GetComponent<HeroBehavior>();
 			waterObject = Resources.Load("Prefabs/watertile") as GameObject;
 			grassObject = Resources.Load("Prefabs/grasstile") as GameObject;
+			grassObject2 = Resources.Load("Prefabs/flowertile") as GameObject;
+			grassObject3 = Resources.Load("Prefabs/grassflowertile") as GameObject;
+			grassObject4 = Resources.Load("Prefabs/grasstile2") as GameObject;
 			sandObject = Resources.Load("Prefabs/sandtile") as GameObject;
 			treeObject = Resources.Load("Prefabs/treetile") as GameObject;
 			rockObject = Resources.Load ("Prefabs/rocktile") as GameObject;
@@ -257,7 +263,16 @@ namespace Skyda{
 		
 		// instantiate grass object
 		void loadGRASS(int x, int y){
-			GameObject e = Instantiate(grassObject) as GameObject;
+		
+			int r = Random.Range(0,20);
+			GameObject obj;
+			if(r==0) obj = grassObject;
+			else if(r==1) obj = grassObject2;
+			else if(r==2) obj = grassObject3;
+			else if(r==3) obj = grassObject4;
+			else obj = grassObject;
+			
+			GameObject e = Instantiate(obj) as GameObject;
 			GrassTile spawnedParticle = e.GetComponent<GrassTile>();
 			if(spawnedParticle != null) {
 				e.transform.position = new Vector3(x,y,0);
