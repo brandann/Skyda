@@ -135,7 +135,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 102854091}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5c0dca9718b62b4c903c6c4c58bfafc, type: 3}
+  m_Script: {fileID: 11500000, guid: 165cd655a484d5541a966f88ece90dac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!4 &102854094
@@ -189,9 +189,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1182296459}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 631fb7c8f4c3b8b48991b0de6e5da793, type: 3}
+  m_Script: {fileID: 11500000, guid: bf1887d8a84e0c5458840c1796535028, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DayLength: 1
 --- !u!108 &1182296462
 Light:
   m_ObjectHideFlags: 0
@@ -266,6 +267,10 @@ Prefab:
     - target: {fileID: 400000, guid: 538bed2c907c15c488f0ed8bf65f5551, type: 2}
       propertyPath: m_RootOrder
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 538bed2c907c15c488f0ed8bf65f5551, type: 2}
+      propertyPath: DayLength
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 538bed2c907c15c488f0ed8bf65f5551, type: 2}

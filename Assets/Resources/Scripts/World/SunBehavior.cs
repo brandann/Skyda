@@ -7,7 +7,7 @@ namespace Skyda{
 		private enum DayQuadrant{q1,q2,q3,q4};
 		private DayQuadrant CurrentQuadrant;
 		
-		private float DayLength = 5f;
+		public float DayLength;
 		private float DayUpdates;
 		private float UpdateIncrement;
 		private float DayTime;

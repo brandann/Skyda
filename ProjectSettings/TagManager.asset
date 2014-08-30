@@ -47,3 +47,15 @@ TagManager:
     userID: 0
     uniqueID: 0
     locked: 0
+  - name: Grass
+    userID: 1
+    uniqueID: 4001937191
+    locked: 0
+  - name: Water
+    userID: 2
+    uniqueID: 3676267809
+    locked: 0
+  - name: Scenery
+    userID: 3
+    uniqueID: 2229184737
+    locked: 0

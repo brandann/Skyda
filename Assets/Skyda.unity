@@ -142,6 +142,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf1887d8a84e0c5458840c1796535028, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DayLength: 1
 --- !u!108 &88030912
 Light:
   m_ObjectHideFlags: 0
@@ -214,8 +215,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 133882232}
-  m_LocalRotation: {x: -.707106829, y: 0, z: 0, w: .707106829}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: .499999821, y: 0, z: 0, w: -.866025507}
+  m_LocalPosition: {x: 0, y: 0, z: -.5}
   m_LocalScale: {x: 4, y: 4, z: 1}
   m_Children: []
   m_Father: {fileID: 2037946330}
@@ -230,7 +231,7 @@ Light:
   serializedVersion: 3
   m_Type: 0
   m_Color: {r: 1, g: 1, b: .603921592, a: 1}
-  m_Intensity: 1
+  m_Intensity: .699999988
   m_Range: 50
   m_SpotAngle: 90
   m_CookieSize: 10
@@ -882,6 +883,10 @@ Prefab:
     - target: {fileID: 400000, guid: 538bed2c907c15c488f0ed8bf65f5551, type: 2}
       propertyPath: m_RootOrder
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 538bed2c907c15c488f0ed8bf65f5551, type: 2}
+      propertyPath: DayLength
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 538bed2c907c15c488f0ed8bf65f5551, type: 2}
