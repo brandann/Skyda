@@ -50,7 +50,7 @@ namespace Skyda{
 		
 			// find and load objects
 			cam = GameObject.Find("Main Camera").GetComponent<CameraBehavior>();
-			hero = GameObject.Find("triangle").GetComponent<HeroBehavior>();
+			hero = GameObject.Find("Hero").GetComponent<HeroBehavior>();
 			waterObject = Resources.Load("Prefabs/watertile") as GameObject;
 			grassObject = Resources.Load("Prefabs/grasstile") as GameObject;
 			grassObject2 = Resources.Load("Prefabs/flowertile") as GameObject;
