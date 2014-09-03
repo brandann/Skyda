@@ -220,6 +220,7 @@ namespace Skyda{
 							loadGRASS(lx,ly);
 							break;
 						case('0'):
+							loadGRASS (lx,ly);
 							loadTREE(lx,ly);
 							break;
 						case('*'):
@@ -238,6 +239,7 @@ namespace Skyda{
 							loadHOUSEWALL(lx,ly);
 							break;*/
 						case('i'):
+							loadGRASS (lx,ly);
 							loadROCK(lx,ly);
 							break;
 						default:
@@ -264,13 +266,15 @@ namespace Skyda{
 		// instantiate grass object
 		void loadGRASS(int x, int y){
 		
-			int r = Random.Range(0,20);
-			GameObject obj;
-			if(r==0) obj = grassObject;
-			else if(r==1) obj = grassObject2;
-			else if(r==2) obj = grassObject3;
-			else if(r==3) obj = grassObject4;
-			else obj = grassObject;
+//			int r = Random.Range(0,20);
+//			GameObject obj;
+//			if(r==0) obj = grassObject;
+//			else if(r==1) obj = grassObject2;
+//			else if(r==2) obj = grassObject3;
+//			else if(r==3) obj = grassObject4;
+//			else obj = grassObject;
+			
+			GameObject obj = grassObject;
 			
 			GameObject e = Instantiate(obj) as GameObject;
 			GrassTile spawnedParticle = e.GetComponent<GrassTile>();

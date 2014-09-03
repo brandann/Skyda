@@ -5,6 +5,7 @@ namespace Skyda{
 	public class GameManager : MonoBehaviour {
 		
 		private enum GameState{Play, Paused, Menu};
+
 		GameState CurrentGameState;
 		
 		HeroBehavior hero;
@@ -38,6 +39,7 @@ namespace Skyda{
 		public void Play(){
 			hero.gameObject.SetActive(true);
 			Application.LoadLevel("Skyda");
+            CurrentGameState = GameState.Play;
 		}
 		
 	}

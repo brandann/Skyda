@@ -203,7 +203,7 @@ SpriteRenderer:
   m_ScaleInLightmap: 1
   m_SortingLayerID: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: 21300000, guid: 35264f1dec20f934181d906a0e5d1870, type: 3}
+  m_Sprite: {fileID: 21300010, guid: 42ea485ba267e8241881eb8665f297a0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!212 &21200002
 SpriteRenderer:

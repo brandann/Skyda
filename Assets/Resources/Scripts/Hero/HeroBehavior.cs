@@ -47,6 +47,11 @@ namespace Skyda{
 //			if(other.gameObject.tag == "water"){
 //				this.transform.Translate(new Vector3(-dir.x * Speed, -dir.y * Speed, 0));
 //			}
+			print ("Collided With Hero");
+			if(other.gameObject.tag == "bush"){
+				print ("\tCollided With Hero: Bush");
+				Destroy(other.gameObject);
+			}
 		}
 	}
 }
