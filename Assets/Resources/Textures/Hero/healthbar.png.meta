@@ -1,8 +1,8 @@
 fileFormatVersion: 2
-guid: 35264f1dec20f934181d906a0e5d1870
+guid: b5740e1dc8fcdab4d9fc19fd7031b67e
 TextureImporter:
   fileIDToRecycleName:
-    21300000: wat1
+    21300000: healthbar
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -38,7 +38,7 @@ TextureImporter:
   alignment: 0
   spritePivot: {x: .5, y: .5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spritePixelsToUnits: 32
+  spritePixelsToUnits: 25
   alphaIsTransparency: 1
   textureType: 8
   buildTargetSettings: []

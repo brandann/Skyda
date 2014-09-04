@@ -1,8 +1,8 @@
 fileFormatVersion: 2
-guid: 12887eac177ef0e438d6b42fa7fc779d
+guid: 16e230b737a8bf443b3d77d871c67d80
 TextureImporter:
   fileIDToRecycleName:
-    21300000: triangle
+    21300000: Hero
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -26,9 +26,9 @@ TextureImporter:
   maxTextureSize: 1024
   textureSettings:
     filterMode: -1
-    aniso: -1
+    aniso: 1
     mipBias: -1
-    wrapMode: -1
+    wrapMode: 1
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
@@ -38,7 +38,7 @@ TextureImporter:
   alignment: 0
   spritePivot: {x: .5, y: .5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spritePixelsToUnits: 887
+  spritePixelsToUnits: 33
   alphaIsTransparency: 1
   textureType: 8
   buildTargetSettings: []

@@ -41,10 +41,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MapTiles:
-  - {fileID: 21300002, guid: 42ea485ba267e8241881eb8665f297a0, type: 3}
-  - {fileID: 21300004, guid: 42ea485ba267e8241881eb8665f297a0, type: 3}
-  - {fileID: 21300006, guid: 42ea485ba267e8241881eb8665f297a0, type: 3}
-  - {fileID: 21300008, guid: 42ea485ba267e8241881eb8665f297a0, type: 3}
+  - {fileID: 21300000, guid: 8d99fa59b4bad5646b8eefb08dd06513, type: 3}
+  - {fileID: 21300000, guid: 695e0f2a9a6caad48acdb7df9b2b1383, type: 3}
+  - {fileID: 21300000, guid: 40493ec2b35f3d9469403682cead4426, type: 3}
+  - {fileID: 21300000, guid: bda223635bf3ade43bb8fccd621b1b95, type: 3}
 --- !u!212 &21200000
 SpriteRenderer:
   m_ObjectHideFlags: 1

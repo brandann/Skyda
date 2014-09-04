@@ -1,8 +1,8 @@
 fileFormatVersion: 2
-guid: 16e230b737a8bf443b3d77d871c67d80
+guid: ba61da17ffb50274db8217cb91263067
 TextureImporter:
   fileIDToRecycleName:
-    21300000: Hero
+    21300000: wat4
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -38,7 +38,7 @@ TextureImporter:
   alignment: 0
   spritePivot: {x: .5, y: .5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spritePixelsToUnits: 33
+  spritePixelsToUnits: 32
   alphaIsTransparency: 1
   textureType: 8
   buildTargetSettings: []

@@ -1,8 +1,8 @@
 fileFormatVersion: 2
-guid: b5740e1dc8fcdab4d9fc19fd7031b67e
+guid: 12887eac177ef0e438d6b42fa7fc779d
 TextureImporter:
   fileIDToRecycleName:
-    21300000: healthbar
+    21300000: triangle
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -26,9 +26,9 @@ TextureImporter:
   maxTextureSize: 1024
   textureSettings:
     filterMode: -1
-    aniso: -1
+    aniso: 1
     mipBias: -1
-    wrapMode: -1
+    wrapMode: 1
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
@@ -38,7 +38,7 @@ TextureImporter:
   alignment: 0
   spritePivot: {x: .5, y: .5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 887
   alphaIsTransparency: 1
   textureType: 8
   buildTargetSettings: []
